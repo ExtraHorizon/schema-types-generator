@@ -1,19 +1,19 @@
 import { fileGive } from "./fileconverter.mjs";
 import { walk } from "jsr:@std/fs/walk";
 
-export async function processInput(inputDir: string, outputDir: string) {
+export async function processInput(input: string, outputDir: string) {
     let files: string[] = [];
-    if (!inputDir) {
+    if (!input) {
         throw new Error("No path given");
     }
 
     try {
-        const stats = await Deno.stat(inputDir);
+        const stats = await Deno.stat(input); //check if input is a file or a directory
         if (stats.isFile) {
-            files = [inputDir];
+            files = [input];
         } else if (stats.isDirectory) {
-            for await (const dirEntry of walk(inputDir)) {
-                if (dirEntry.path.endsWith(".json")) {
+            for await (const dirEntry of walk(input)) { //loop through files recursively
+                if (dirEntry.path.endsWith(".json")) { // only collect .json files
                     files.push(dirEntry.path);
                 }
             }

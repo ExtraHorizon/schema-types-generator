@@ -2,8 +2,8 @@ import { compile } from "npm:json-schema-to-typescript";
 import { readFileToConvert } from "./readJSON.mjs";
 import { writeFile } from "node:fs";
 
-export function fileGive(processedFiles, desFolder = "") {
-  for (const file of processedFiles) {
+export function fileGive(processedFiles, desFolder) {
+  for (const file of processedFiles) { // process all schemas
     const mySchema = readFileToConvert(file);
     completeSchema(mySchema, desFolder);
   }
@@ -21,15 +21,13 @@ export async function convertSchema(schema, name) {
   });
 }
 
-export async function completeSchema(mySchema, desFolder = null) {
+export async function completeSchema(mySchema, desFolder) {
   const ts = await convertSchema(mySchema, mySchema.name);
   if (desFolder) {
-    await writeFile(`${desFolder}/${mySchema.name}.ts`, ts, function (err) {
+    await writeFile(`${desFolder}/${mySchema.name}.ts`, ts, function (err) { //write actual file
       if (err) throw err;
     });
   } else {
-    await writeFile(`${mySchema.name}.ts`, ts, function (err) {
-      if (err) throw err;
-    });
+    throw new Error("No destination folder provided");
   }
 }

@@ -1,6 +1,8 @@
 import { assertEquals } from "@std/assert";
 import { readFileToConvert } from "../readJSON.mjs";
 import { walk } from "jsr:@std/fs/walk";
+import { processInput } from "../index.ts";
+import { ensureDir } from "https://deno.land/std@0.224.0/fs/ensure_dir.ts";
 
 Deno.test("convert file test", () => {
   const result = readFileToConvert("./tests/Data/example-schema.json");
@@ -15,11 +17,14 @@ Deno.test("convert dir test", async () => {
   }
 });
 
-/*
-Deno.test("compareTSOutput", async () =>{
-  //WIP
-})
-*/
+Deno.test("test full TS Output", async () => {
+  await processInput("./tests/Data/example-schema.json", "./output");
+  await ensureDir("./output");
+  const conversion = await Deno.readTextFile(
+    "./output/blood-pressure-measurement.ts",
+  );
+  assertEquals(conversion, expectedContent);
+});
 
 const expectedConversion = {
   name: "blood-pressure-measurement",
@@ -42,4 +47,6 @@ const expectedConversion = {
   },
 };
 
-const expectedTSConversion = "tests/Data/blood-pressure-measurement.ts";
+const expectedContent = await Deno.readTextFile(
+  "tests/Data/blood-pressure-measurement.ts",
+);

@@ -34,7 +34,7 @@ yargs(hideBin(process.argv))
             console.log(`Processing directory: ${inputDir}`);
             console.log(`Output directory: ${outputDir}`);
 
-            await ensureDir(outputDir); // Ensures output directory exists
+            await ensureDir(outputDir); // Ensures output directory exists and makes on if it doesn't
 
             processInput(inputDir, outputDir);
             console.log(`Files processed successfully!`);
