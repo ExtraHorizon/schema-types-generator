@@ -1,0 +1,28 @@
+{
+    "name": "blood-pressure-meament",
+    "description": "Blood pressure measurement",
+    "statuses": {
+      "created": {}
+    },
+    "creationTransition": {
+      "type": "manual",
+      "toStatus": "created",
+      "conditions": [],
+      "actions": []
+    },
+    "properties": {
+      "systolic": {
+        "type": "number",
+        "description": "Systolic pressure in mmHg"
+      },
+      "diastolic": {
+        "type": "number",
+        "description": "Diastolic pressure in mmHg"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp when the measurement was taken"
+      }
+    }
+  }
