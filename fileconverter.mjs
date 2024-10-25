@@ -21,10 +21,8 @@ export async function convertSchema(schema, name) {
   });
 }
 
-async function completeSchema(mySchema, desFolder = null) {
+export async function completeSchema(mySchema, desFolder = null) {
   const ts = await convertSchema(mySchema, mySchema.name);
-  console.log(`writing ${desFolder}/${mySchema.name}.ts`);
-  console.log(`Writing ${mySchema.name}.ts...`);
   if (desFolder) {
     await writeFile(`${desFolder}/${mySchema.name}.ts`, ts, function (err) {
       if (err) throw err;
